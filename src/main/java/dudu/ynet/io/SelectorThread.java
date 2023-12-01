@@ -37,11 +37,11 @@ public class SelectorThread implements Runnable {
         // 类似nettyEventLoop，一直转圈
         while (true) {
             try {
-                System.out.println(Thread.currentThread().getName() + "   : before select(), " + selector.keys().size());
+//                System.out.println(Thread.currentThread().getName() + "   : before select(), " + selector.keys().size());
                 // 1阻塞，问内核多路复用中是否有东西
                 // 如果其它线程调用了此selector的wakeup，就不会阻塞了
                 int num = selector.select();
-                System.out.println(Thread.currentThread().getName() + "   : after select()," + selector.keys().size());
+//                System.out.println(Thread.currentThread().getName() + "   : after select()," + selector.keys().size());
                 // 2处理selectKeys
                 if (num > 0) {
                     // 拿到事件
@@ -86,6 +86,7 @@ public class SelectorThread implements Runnable {
 
 
     private void acceptHandler(SelectionKey key) {
+        System.out.println(Thread.currentThread().getName()  + " acceptHandler....");
         ServerSocketChannel server = (ServerSocketChannel) key.channel();
         try {
             SocketChannel client = server.accept();
@@ -99,6 +100,7 @@ public class SelectorThread implements Runnable {
 
 
     private void readHandler(SelectionKey key) {
+        System.out.println(Thread.currentThread().getName() + " readHandler....");
         ByteBuffer buffer = (ByteBuffer) key.attachment();
         SocketChannel client = (SocketChannel) key.channel();
         buffer.clear();
