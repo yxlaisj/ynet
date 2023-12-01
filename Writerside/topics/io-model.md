@@ -120,12 +120,12 @@ select,poll的缺点是仍然发生了全量fds的遍历，在内核中是O(n)�
 ```mermaid
 flowchart TD
     client--"1.epoll_create\n-"-->redblacktree
-    redblacktree-."1.fd6".->client
+    redblacktree-."2.fd6".->client
 
-    client--"2.epoll_ctl(fd6,ADD,fd4)\n_"-->redblacktree
+    client--"3.epoll_ctl(fd6,ADD,fd4)\n_"-->redblacktree
 
-    client--3.epoll_wait\n_-->linklist
-    linklist-."3.ready fds".->client
+    client--4.epoll_wait\n_-->linklist
+    linklist-."5.ready fds".->client
 
     io-..-int
     
